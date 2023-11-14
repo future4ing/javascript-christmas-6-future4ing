@@ -6,8 +6,8 @@ class App {
   async run() {
     Console.print(MESSAGE_GREETING);
     const input = new InputView;
-    input.readVisitDate();
-    // input.readOrders();
+    await input.readVisitDate();
+    input.readOrderMenu();
   }
 }
 

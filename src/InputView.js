@@ -1,7 +1,7 @@
 /* eslint-disable import/no-cycle */
 import { Console } from '@woowacourse/mission-utils';
 import { INPUT_DATE, INPUT_ORDER } from './constants.js';
-import { validateVisitDate } from './validate.js';
+import { validateVisitDate, isValidOrderMenu } from './validate.js';
 
 class InputView {
     constructor() {
@@ -23,6 +23,20 @@ class InputView {
 
         this.inputDate = visitDate;
         return this.inputDate;
+    }
+
+    async readOrderMenu() {
+        let orderMenu;
+        do {
+            try {
+                orderMenu = await Console.readLineAsync(INPUT_ORDER);
+                isValidOrderMenu(orderMenu);
+            } catch (error) {
+                Console.print(error.message);
+            }
+        } while (!isValidOrderMenu(orderMenu));
+    
+        return orderMenu;
     }
 }
 
