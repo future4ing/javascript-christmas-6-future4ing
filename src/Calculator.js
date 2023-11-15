@@ -71,9 +71,9 @@ function calculateChristmasDiscount(dayOfMonth) {
     // 크리스마스 디데이 할인 계산
     if (dayOfMonth >= 1 && dayOfMonth <= 25) {
         return 1000 + (dayOfMonth - 1) * 100;
-    } else {
+    } 
         return 0;
-    }
+    
 }
 
 // 특별 할인 조건 날짜 확인
@@ -90,9 +90,9 @@ function calculateSpecialDiscount(date) {
     // 특별 할인 조건 확인
     if (isSpecialDiscountDay(date)) {
         return 1000; // 특별 할인 금액
-    } else {
+    } 
         return 0;
-    }
+    
 }
 
 // 혜택 내역 계산
@@ -101,7 +101,7 @@ function calculateEventDiscounts(dateObj, orderString, totalCost) {
         return [{ name: '없음', amount: 0 }];
     }
 
-    let discounts = [];
+    const discounts = [];
     // 입력된 숫자 형태의 날짜를 Date 객체로 변환
     const dayOfMonth = dateObj.getDate();
     // 크리스마스 디데이 할인 계산
@@ -151,14 +151,19 @@ function calculateDiscountedTotal(totalOrderPrice, discounts) {
     return totalOrderPrice + discountAmount;
 }
 
-/*
+function giveEventBadge(totalBenefit) {
+    // 혜택 금액의 절대값으로
+    const absoluteBenefit = Math.abs(totalBenefit);
 
-
-
-function determineEventBadge(totalBenefits) {
-    // 이벤트 배지 결정
+    if (absoluteBenefit >= 20000) {
+        return '산타';
+    } if (absoluteBenefit >= 10000) {
+        return '트리';
+    } if (absoluteBenefit >= 5000) {
+        return '별';
+    } 
+        return '없음';
+    
 }
 
-*/
-
-export { calculateOrderCost, calculateEventDiscounts, calculateTotalBenefit, calculateDiscountedTotal };
+export { calculateOrderCost, calculateEventDiscounts, calculateTotalBenefit, calculateDiscountedTotal, giveEventBadge };
