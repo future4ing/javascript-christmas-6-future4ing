@@ -1,5 +1,5 @@
 import { Console } from '@woowacourse/mission-utils';
-import { TITLE, NO_BENEFIT, GIFT } from './constants.js';
+import { TITLE, NO_BENEFIT, GIFT, UNIT_PRICE, UNIT_QUANTITY } from './constants.js';
         
 class PreviewDetail {
     printMenu(order) {
@@ -8,12 +8,12 @@ class PreviewDetail {
         const items = order.split(',');
         items.forEach(item => {
             const [name, quantity] = item.split('-');
-            Console.print(`${name.trim()} ${quantity.trim()}개`);
+            Console.print(`${name.trim()} ${quantity.trim()}${UNIT_QUANTITY}`);
         });
     }
 
     printTotalOrderPrice(totalOrderPrice) {
-        Console.print(`\n${TITLE.TOTAL_AMOUNT}\n${totalOrderPrice.toLocaleString()}원`);
+        Console.print(`\n${TITLE.TOTAL_AMOUNT}\n${totalOrderPrice.toLocaleString()}${UNIT_PRICE}`);
     }
     
     printGiftMenu(totalOrderPrice) {
@@ -26,25 +26,22 @@ class PreviewDetail {
             Console.print(NO_BENEFIT);
         } else {
             discounts.forEach(discount => {
-                Console.print(`${discount.name}: ${discount.amount.toLocaleString()}원`);
+                Console.print(`${discount.name}: ${discount.amount.toLocaleString()}${UNIT_PRICE}`);
             });
         }
     }
 
     printTotalBenefit(totalBenefit) {
-        Console.print(`\n${TITLE.TOTAL_BENEFIT}\n${totalBenefit.toLocaleString()}원`);
+        Console.print(`\n${TITLE.TOTAL_BENEFIT}\n${totalBenefit.toLocaleString()}${UNIT_PRICE}`);
     }
 
     printDiscountedTotalPrice(discountedTotalPrice) {
-        Console.print(`\n${TITLE.AMOUNT_AFTER_DISCOUNT}\n${discountedTotalPrice.toLocaleString()}원`);
+        Console.print(`\n${TITLE.AMOUNT_AFTER_DISCOUNT}\n${discountedTotalPrice.toLocaleString()}${UNIT_PRICE}`);
     }
 
     printEventBadge(eventBadge) {
         Console.print(`\n${TITLE.EVENT_BADGE}\n${eventBadge.length === 0 ? NO_BENEFIT : eventBadge}`);
     }
-
 }
-        
-        
         
 export default PreviewDetail;

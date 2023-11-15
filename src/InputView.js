@@ -1,4 +1,3 @@
-/* eslint-disable import/no-cycle */
 import { Console } from '@woowacourse/mission-utils';
 import { INPUT_DATE, INPUT_ORDER } from './constants.js';
 import { validateVisitDate, isValidOrderMenu } from './validate.js';
