@@ -148,12 +148,18 @@ function calculateTotalBenefit(discounts) {
     return totalBenefit;
 }
 
+function calculateDiscountedTotal(totalOrderPrice, discounts) {
+    // 증정 이벤트를 제외한 할인 금액만 계산
+    const discountAmount = discounts
+        .filter(discount => discount.name !== '증정 이벤트')
+        .reduce((total, discount) => total + discount.amount, 0);
+    // 할인 후 예상 결제 금액
+    return totalOrderPrice + discountAmount;
+}
 
 /*
 
-function calculateDiscountedTotal(totalCost, totalBenefits) {
-    // 할인 후 예상 결제 금액 계산
-}
+
 
 function determineEventBadge(totalBenefits) {
     // 이벤트 배지 결정
@@ -161,4 +167,4 @@ function determineEventBadge(totalBenefits) {
 
 */
 
-export { calculateOrderCost, calculateEventDiscounts, calculateTotalBenefit };
+export { calculateOrderCost, calculateEventDiscounts, calculateTotalBenefit, calculateDiscountedTotal };
