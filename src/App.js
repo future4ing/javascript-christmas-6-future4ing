@@ -10,6 +10,8 @@ class App {
         // 방문 날짜, 메뉴 입력 받음
         const date = await inputView.readVisitDate();
         const order = await inputView.readOrderMenu();
+        // 미리보기 안내 문구 출력
+        outputView.printPreview(date);
     }
 }
 
