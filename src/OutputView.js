@@ -14,7 +14,8 @@ class OutputView {
 
     printPreviewDetail(order) {
         const details = new PreviewDetail();
-
+        // 주문 메뉴
+        details.printMenu(order);
     }
 }
 
