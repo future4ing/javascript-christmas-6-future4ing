@@ -138,21 +138,27 @@ function calculateEventDiscounts(dateObj, orderString, totalCost) {
     return discounts.length > 0 ? discounts : [{ name: '없음', amount: 0 }];
 }
 
+function calculateTotalBenefit(discounts) {
+    let totalBenefit = 0;
+    // 모든 할인 및 증정 금액 합산
+    for (const discount of discounts) {
+        totalBenefit += discount.amount;
+    }
+
+    return totalBenefit;
+}
+
 
 /*
 
-function calculateTotalBenefits(discounts, eventGifts) {
-    // 총 혜택 금액 계산 로직 구현...
-}
-
 function calculateDiscountedTotal(totalCost, totalBenefits) {
-    // 할인 후 예상 결제 금액 계산 로직 구현...
+    // 할인 후 예상 결제 금액 계산
 }
 
 function determineEventBadge(totalBenefits) {
-    // 이벤트 배지 결정 로직 구현...
+    // 이벤트 배지 결정
 }
 
 */
 
-export { calculateOrderCost, calculateEventDiscounts };
+export { calculateOrderCost, calculateEventDiscounts, calculateTotalBenefit };
