@@ -1,5 +1,5 @@
 import { Console } from '@woowacourse/mission-utils';
-import { INPUT_DATE, INPUT_ORDER } from './constants.js';
+import { INPUT_DATE, INPUT_ORDER, MIN_DATE, MAX_DATE } from './constants.js';
 import { validateVisitDate, isValidOrderMenu } from './validate.js';
 
 class InputView {
@@ -18,7 +18,7 @@ class InputView {
             } catch (error) {
                 Console.print(error.message);
             }
-        } while (isNaN(visitDate) || visitDate < 1 || visitDate > 31);
+        } while (isNaN(visitDate) || visitDate < MIN_DATE || visitDate > MAX_DATE);
 
         this.inputDate = visitDate;
         return this.inputDate;
