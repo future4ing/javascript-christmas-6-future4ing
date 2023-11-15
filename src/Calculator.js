@@ -139,13 +139,7 @@ function calculateEventDiscounts(dateObj, orderString, totalCost) {
 }
 
 function calculateTotalBenefit(discounts) {
-    let totalBenefit = 0;
-    // 모든 할인 및 증정 금액 합산
-    for (const discount of discounts) {
-        totalBenefit += discount.amount;
-    }
-
-    return totalBenefit;
+    return discounts.reduce((total, discount) => total + discount.amount, 0);
 }
 
 function calculateDiscountedTotal(totalOrderPrice, discounts) {
