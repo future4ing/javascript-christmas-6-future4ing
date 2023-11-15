@@ -21,6 +21,8 @@ class OutputView {
         // <할인 전 총주문 금액>
         const totalOrderPrice = calculateOrderCost(menu, order);
         details.printTotalOrderPrice(totalOrderPrice);
+        // <증정 메뉴>
+        details.printGiftMenu(totalOrderPrice);
     }
 }
 

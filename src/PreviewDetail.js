@@ -1,5 +1,5 @@
 import { Console } from '@woowacourse/mission-utils';
-import { TITLE, NO_BENEFIT } from './constants.js';
+import { TITLE, NO_BENEFIT, GIFT } from './constants.js';
         
 class PreviewDetail {
     printMenu(order) {
@@ -17,6 +17,10 @@ class PreviewDetail {
         Console.print(`\n${TITLE.TOTAL_AMOUNT}\n${totalOrderPrice.toLocaleString()}원`);
     }
     
+    printGiftMenu(totalOrderPrice) {
+        Console.print(`\n${TITLE.GIFT_MENU}\n${totalOrderPrice < 120000 ? NO_BENEFIT : GIFT}\n`);
+    }
+
 }
         
         
