@@ -28,6 +28,10 @@ const TITLE = {
     EVENT_BADGE: `${TITLE_BRACKET_BEFORE}12월 이벤트 배지${TITLE_BRACKET_AFTER}`,
 };
 
+const UNIT_PRICE = '원';
+const UNIT_QUANTITY = '개';
+
+const MINIMUM_FOR_GIFT = 120000;
 const GIFT = '샴페인 1개';
 const NO_BENEFIT = '없음';
 
@@ -38,6 +42,9 @@ export {
     MESSAGE_GREETING,
     MESSAGE_PREVIEW,
     TITLE,
+    UNIT_PRICE,
+    UNIT_QUANTITY,
+    MINIMUM_FOR_GIFT,
     GIFT,
     NO_BENEFIT,
 };
