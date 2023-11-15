@@ -18,7 +18,18 @@ class PreviewDetail {
     }
     
     printGiftMenu(totalOrderPrice) {
-        Console.print(`\n${TITLE.GIFT_MENU}\n${totalOrderPrice < 120000 ? NO_BENEFIT : GIFT}\n`);
+        Console.print(`\n${TITLE.GIFT_MENU}\n${totalOrderPrice < 120000 ? NO_BENEFIT : GIFT}`);
+    }
+
+    printBenefits(discounts) {
+        Console.print(`\n${TITLE.BENEFIT}`);
+        if (discounts.length === 1 && discounts[0].name === NO_BENEFIT) {
+            Console.print(NO_BENEFIT);
+        } else {
+            discounts.forEach(discount => {
+                Console.print(`${discount.name}: ${discount.amount.toLocaleString()}원`);
+            });
+        }
     }
 
 }
