@@ -1,7 +1,7 @@
 import { Console } from '@woowacourse/mission-utils';
 import { MESSAGE_GREETING, MESSAGE_PREVIEW } from './constants.js';
 import PreviewDetail from './PreviewDetail.js';
-import { calculateOrderCost, calculateEventDiscounts, calculateTotalBenefit, calculateDiscountedTotal } from './Calculator.js';
+import { calculateOrderCost, calculateEventDiscounts, calculateTotalBenefit, calculateDiscountedTotal, giveEventBadge } from './Calculator.js';
 import menu from './Menu.js';
 
 class OutputView {
@@ -39,6 +39,9 @@ class OutputView {
         // <할인 후 예상 결제 금액>
         const discountedTotalPrice = calculateDiscountedTotal(totalOrderPrice, discounts);
         details.printDiscountedTotalPrice(discountedTotalPrice);
+        // <12월 이벤트 배지>
+        const eventBadge = giveEventBadge(totalBenefit);
+        details.printEventBadge(eventBadge);
     }
 }
 

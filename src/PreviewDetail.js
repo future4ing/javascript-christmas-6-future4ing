@@ -40,6 +40,10 @@ class PreviewDetail {
         Console.print(`\n${TITLE.AMOUNT_AFTER_DISCOUNT}\n${discountedTotalPrice.toLocaleString()}원`);
     }
 
+    printEventBadge(eventBadge) {
+        Console.print(`\n${TITLE.EVENT_BADGE}\n${eventBadge.length === 0 ? NO_BENEFIT : eventBadge}`);
+    }
+
 }
         
         
