@@ -1,7 +1,7 @@
 import { Console } from '@woowacourse/mission-utils';
 import { MESSAGE_GREETING, MESSAGE_PREVIEW } from './constants.js';
 import PreviewDetail from './PreviewDetail.js';
-import { calculateOrderCost, calculateEventDiscounts } from './Calculator.js';
+import { calculateOrderCost, calculateEventDiscounts, calculateTotalBenefit } from './Calculator.js';
 import menu from './Menu.js';
 
 class OutputView {
@@ -33,6 +33,9 @@ class OutputView {
 
         const discounts = calculateEventDiscounts(dateObj, order, totalOrderPrice);
         details.printBenefits(discounts);
+        // <총혜택 금액>
+        const totalBenefit = calculateTotalBenefit(discounts);
+        details.printTotalBenefit(totalBenefit);
     }
 }
 

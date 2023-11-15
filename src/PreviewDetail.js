@@ -32,6 +32,10 @@ class PreviewDetail {
         }
     }
 
+    printTotalBenefit(totalBenefit) {
+        Console.print(`\n${TITLE.TOTAL_BENEFIT}\n${totalBenefit.toLocaleString()}원`);
+    }
+
 }
         
         
