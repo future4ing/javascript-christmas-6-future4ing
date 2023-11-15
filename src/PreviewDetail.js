@@ -36,6 +36,10 @@ class PreviewDetail {
         Console.print(`\n${TITLE.TOTAL_BENEFIT}\n${totalBenefit.toLocaleString()}원`);
     }
 
+    printDiscountedTotalPrice(discountedTotalPrice) {
+        Console.print(`\n${TITLE.AMOUNT_AFTER_DISCOUNT}\n${discountedTotalPrice.toLocaleString()}원`);
+    }
+
 }
         
         
