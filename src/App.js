@@ -12,6 +12,8 @@ class App {
         const order = await inputView.readOrderMenu();
         // 미리보기 안내 문구 출력
         outputView.printPreview(date);
+        // 이벤트 혜택 미리보기 출력
+        outputView.printPreviewDetail(order);
     }
 }
 

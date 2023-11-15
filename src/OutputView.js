@@ -1,5 +1,6 @@
 import { Console } from '@woowacourse/mission-utils';
 import { MESSAGE_GREETING, MESSAGE_PREVIEW } from './constants.js';
+import PreviewDetail from './PreviewDetail.js';
 
 class OutputView {
     printGreeting() {
@@ -9,6 +10,11 @@ class OutputView {
     printPreview(date) {
         const message = MESSAGE_PREVIEW.replace("${date}", date);
         Console.print(message);
+    }
+
+    printPreviewDetail(order) {
+        const details = new PreviewDetail();
+
     }
 }
 
