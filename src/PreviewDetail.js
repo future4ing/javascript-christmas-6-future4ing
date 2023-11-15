@@ -1,5 +1,5 @@
 import { Console } from '@woowacourse/mission-utils';
-import { TITLE } from './constants.js';
+import { TITLE, NO_BENEFIT } from './constants.js';
         
 class PreviewDetail {
     printMenu(order) {
@@ -13,6 +13,10 @@ class PreviewDetail {
         }
     }
 
+    printTotalOrderPrice(totalOrderPrice) {
+        Console.print(`\n${TITLE.TOTAL_AMOUNT}\n${totalOrderPrice.toLocaleString()}원`);
+    }
+    
 }
         
         
