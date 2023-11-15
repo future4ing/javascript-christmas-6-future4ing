@@ -1,4 +1,28 @@
 import menu from './Menu.js';
+import { 
+    DISCOUNT_PER_QUANTITY,
+    DISCOUNT_BASE,
+    CHRISTMAS_DISCOUNT_INCREMENT,
+    MINIMUM_COST_FOR_DISCOUNT,
+    EVENT_GIFT_THRESHOLD,
+    EVENT_GIFT_DISCOUNT,
+    FRIDAY,
+    SATURDAY,
+    SUNDAY,
+    CHRISTMAS_DAY,
+    SANTA_BADGE_THRESHOLD,
+    TREE_BADGE_THRESHOLD,
+    STAR_BADGE_THRESHOLD,
+    NO_DISCOUNT,
+    CHRISTMAS_DISCOUNT_NAME,
+    WEEKDAY_DISCOUNT_NAME,
+    WEEKEND_DISCOUNT_NAME,
+    SPECIAL_DISCOUNT_NAME,
+    EVENT_GIFT_NAME,
+    SANTA_BADGE,
+    TREE_BADGE,
+    STAR_BADGE 
+} from './constants.js';
 
 function calculateItemCost(menu, item) {
     const [itemName, quantityStr] = item.split('-');
@@ -15,47 +39,40 @@ function calculateOrderCost(menu, order) {
 }
 
 function isWeekend(date) {
-    // 주말 여부를 확인하는 함수 (금요일: 5, 토요일: 6)
     const dayOfWeek = date.getDay();
-    return dayOfWeek === 5 || dayOfWeek === 6;
+    return dayOfWeek === FRIDAY || dayOfWeek === SATURDAY;
 }
 
-// 평일 할인 요건에 해당하는지 확인 - 디저트 메뉴
 function calculateWeekdayDiscount(orderString, menu) {
     let discountAmount = 0;
 
-    // 주문 문자열을 분석하여 메뉴와 수량을 추출
     const orderItems = orderString.split(',').map(item => {
         const [name, quantity] = item.split('-');
         return { name: name.trim(), quantity: parseInt(quantity, 10) };
     });
 
-    // dessert 섹션에 해당하는 메뉴의 수량만큼 할인 적용
     orderItems.forEach(orderItem => {
         const menuItem = menu.find(menuItem => menuItem.name === orderItem.name);
         if (menuItem && menuItem.section === 'dessert') {
-            discountAmount += 2023 * orderItem.quantity;
+            discountAmount += DISCOUNT_PER_QUANTITY * orderItem.quantity;
         }
     });
 
     return discountAmount;
 }
 
-// 주말 할인 요건에 부합하는지 확인 - 메인 메뉴
 function calculateWeekendDiscount(orderString, menu) {
     let discountAmount = 0;
 
-    // 주문 문자열을 분석하여 메뉴와 수량을 추출
     const orderItems = orderString.split(',').map(item => {
         const [name, quantity] = item.split('-');
         return { name: name.trim(), quantity: parseInt(quantity, 10) };
     });
 
-    // 'main' 섹션에 해당하는 메뉴의 수량만큼 할인 적용
     orderItems.forEach(orderItem => {
         const menuItem = menu.find(menuItem => menuItem.name === orderItem.name);
         if (menuItem && menuItem.section === 'main') {
-            discountAmount += 2023 * orderItem.quantity;
+            discountAmount += DISCOUNT_PER_QUANTITY * orderItem.quantity;
         }
     });
 
@@ -63,74 +80,60 @@ function calculateWeekendDiscount(orderString, menu) {
 }
 
 function calculateChristmasDiscount(dayOfMonth) {
-    // 크리스마스 디데이 할인 계산
-    if (dayOfMonth >= 1 && dayOfMonth <= 25) {
-        return 1000 + (dayOfMonth - 1) * 100;
+    if (dayOfMonth >= 1 && dayOfMonth <= CHRISTMAS_DAY) {
+        return DISCOUNT_BASE + (dayOfMonth - 1) * CHRISTMAS_DISCOUNT_INCREMENT;
     } 
-        return 0;
-    
+    return 0;
 }
 
-// 특별 할인 조건 날짜 확인
 function isSpecialDiscountDay(date) {
     const dayOfWeek = date.getDay();
     const dayOfMonth = date.getDate();
 
-    // 별이 있는 날짜 확인: 매주 일요일 (0)과 크리스마스 (12월 25일)
-    return dayOfWeek === 0 || dayOfMonth === 25;
+    return dayOfWeek === SUNDAY || dayOfMonth === CHRISTMAS_DAY;
 }
 
-// 특별할인 조건에 부합할 경우 할인 반환
 function calculateSpecialDiscount(date) {
-    // 특별 할인 조건 확인
     if (isSpecialDiscountDay(date)) {
-        return 1000; // 특별 할인 금액
+        return DISCOUNT_BASE;
     } 
-        return 0;
-    
+    return 0;
 }
 
-// 혜택 내역 계산
 function calculateEventDiscounts(dateObj, orderString, totalCost) {
-    if (totalCost < 10000) {
-        return [{ name: '없음', amount: 0 }];
+    if (totalCost < MINIMUM_COST_FOR_DISCOUNT) {
+        return [{ name: NO_DISCOUNT, amount: 0 }];
     }
 
     const discounts = [];
-    // 입력된 숫자 형태의 날짜를 Date 객체로 변환
     const dayOfMonth = dateObj.getDate();
-    // 크리스마스 디데이 할인 계산
     const christmasDiscount = calculateChristmasDiscount(dayOfMonth);
     if (christmasDiscount > 0) {
-        discounts.push({ name: '크리스마스 디데이 할인', amount: -christmasDiscount });
+        discounts.push({ name: CHRISTMAS_DISCOUNT_NAME, amount: -christmasDiscount });
     }
-    // 평일 할인 계산
     if (!isWeekend(dateObj)) {
         const weekdayDiscount = calculateWeekdayDiscount(orderString, menu);
         if (weekdayDiscount > 0) {
-            discounts.push({ name: '평일 할인', amount: -weekdayDiscount });
+            discounts.push({ name: WEEKDAY_DISCOUNT_NAME, amount: -weekdayDiscount });
         }
     }
-    // 주말 할인 계산
     if (isWeekend(dateObj)) {
         const weekendDiscount = calculateWeekendDiscount(orderString, menu);
         if (weekendDiscount > 0) {
-            discounts.push({ name: '주말 할인', amount: -weekendDiscount });
+            discounts.push({ name: WEEKEND_DISCOUNT_NAME, amount: -weekendDiscount });
         }
     }
-    // 특별 할인 계산
     if (isSpecialDiscountDay(dateObj)) {
         const specialDiscount = calculateSpecialDiscount(dateObj);
         if (specialDiscount > 0) {
-            discounts.push({ name: '특별 할인', amount: -specialDiscount });
+            discounts.push({ name: SPECIAL_DISCOUNT_NAME, amount: -specialDiscount });
         }
     }
-    // 증정 이벤트 계산
-    if (totalCost >= 120000) {
-        discounts.push({ name: '증정 이벤트', amount: -25000 }); // 샴페인의 가정된 가격
+    if (totalCost >= EVENT_GIFT_THRESHOLD) {
+        discounts.push({ name: EVENT_GIFT_NAME, amount: -EVENT_GIFT_DISCOUNT });
     }
     
-    return discounts.length > 0 ? discounts : [{ name: '없음', amount: 0 }];
+    return discounts.length > 0 ? discounts : [{ name: NO_DISCOUNT, amount: 0 }];
 }
 
 function calculateTotalBenefit(discounts) {
@@ -138,27 +141,24 @@ function calculateTotalBenefit(discounts) {
 }
 
 function calculateDiscountedTotal(totalOrderPrice, discounts) {
-    // 증정 이벤트를 제외한 할인 금액만 계산
     const discountAmount = discounts
-        .filter(discount => discount.name !== '증정 이벤트')
+        .filter(discount => discount.name !== EVENT_GIFT_NAME)
         .reduce((total, discount) => total + discount.amount, 0);
-    // 할인 후 예상 결제 금액
+
     return totalOrderPrice + discountAmount;
 }
 
 function giveEventBadge(totalBenefit) {
-    // 혜택 금액의 절대값으로
     const absoluteBenefit = Math.abs(totalBenefit);
 
-    if (absoluteBenefit >= 20000) {
-        return '산타';
-    } if (absoluteBenefit >= 10000) {
-        return '트리';
-    } if (absoluteBenefit >= 5000) {
-        return '별';
+    if (absoluteBenefit >= SANTA_BADGE_THRESHOLD) {
+        return SANTA_BADGE;
+    } if (absoluteBenefit >= TREE_BADGE_THRESHOLD) {
+        return TREE_BADGE;
+    } if (absoluteBenefit >= STAR_BADGE_THRESHOLD) {
+        return STAR_BADGE;
     } 
-        return '없음';
-    
+    return NO_DISCOUNT;
 }
 
 export { calculateOrderCost, calculateEventDiscounts, calculateTotalBenefit, calculateDiscountedTotal, giveEventBadge };
