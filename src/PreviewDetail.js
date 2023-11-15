@@ -4,13 +4,12 @@ import { TITLE, NO_BENEFIT, GIFT } from './constants.js';
 class PreviewDetail {
     printMenu(order) {
         Console.print(TITLE.ORDER_MENU);
-
+    
         const items = order.split(',');
-
-        for (const item of items) {
+        items.forEach(item => {
             const [name, quantity] = item.split('-');
             Console.print(`${name.trim()} ${quantity.trim()}개`);
-        }
+        });
     }
 
     printTotalOrderPrice(totalOrderPrice) {
