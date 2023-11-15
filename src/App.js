@@ -1,14 +1,16 @@
-import { Console } from "@woowacourse/mission-utils";
+import OutputView from './OutputView.js';
 import InputView from './InputView.js';
-import { MESSAGE_GREETING } from './constants.js';
 
 class App {
-  async run() {
-    Console.print(MESSAGE_GREETING);
-    const input = new InputView;
-    await input.readVisitDate();
-    input.readOrderMenu();
-  }
+    async run() {
+        const outputView = new OutputView();
+        const inputView = new InputView();
+        // 인사말 출력
+        outputView.printGreeting();
+        // 방문 날짜, 메뉴 입력 받음
+        const date = await inputView.readVisitDate();
+        const order = await inputView.readOrderMenu();
+    }
 }
 
 export default App;
