@@ -1,5 +1,5 @@
 import { Console } from '@woowacourse/mission-utils';
-import { TITLE, NO_BENEFIT, GIFT, UNIT_PRICE, UNIT_QUANTITY } from './constants.js';
+import { TITLE, NO_BENEFIT, MINIMUM_FOR_GIFT, GIFT, UNIT_PRICE, UNIT_QUANTITY } from './constants.js';
         
 class PreviewDetail {
     printMenu(order) {
@@ -17,7 +17,7 @@ class PreviewDetail {
     }
     
     printGiftMenu(totalOrderPrice) {
-        Console.print(`\n${TITLE.GIFT_MENU}\n${totalOrderPrice < 120000 ? NO_BENEFIT : GIFT}`);
+        Console.print(`\n${TITLE.GIFT_MENU}\n${totalOrderPrice < MINIMUM_FOR_GIFT ? NO_BENEFIT : GIFT}`);
     }
 
     printBenefits(discounts) {
